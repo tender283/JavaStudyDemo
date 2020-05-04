@@ -84,7 +84,7 @@ public class StringTest {
         System.out.println(str1.contains("hello"));
     }
     @Test
-    public void test替换查找(){
+    public void test查找(){
         String str1 = "hello, world. today is 2020-5-4. say hi to me.";
 
         int at1 = str1.indexOf("o",7);
@@ -101,5 +101,29 @@ public class StringTest {
             System.out.println(String.format("第 %d 位是小写字母o", at3 + 1));
             index = at3;
         }while(true);
+
+        int at4 = str1.lastIndexOf("o");
+        System.out.println(at4);
+
+        int index2 = str1.length();
+        do{
+            int at5 = str1.lastIndexOf("o",index2 - 1);
+            if (at5 == -1){
+                break;
+            }
+            System.out.println(String.format("第 %d 位是小写字母o",at5 + 1));
+            index2 = at5;
+        }while(true);
+    }
+    @Test
+    public void test替换(){
+        System.out.println("hello, world!".replace("o","O"));
+    }
+    @Test
+    public void test去空格(){
+        String str1 = "     hello,World   ";
+        System.out.println(str1.trim());
+        System.out.println(str1.trim().toUpperCase());
+        System.out.println(str1.trim().toLowerCase());
     }
 }
