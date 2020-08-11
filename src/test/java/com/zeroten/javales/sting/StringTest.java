@@ -11,7 +11,6 @@ public class StringTest {
 //判断两个对象是否指向同一个内存地址，且只有双引号赋值的变量才会在变量池中判断，首先判断在(字符串)
 // 常量池中是否存在，str1的常量池肯定没有需创建，而str2在常量池中已经存在，因此其内存地址相等；true
         System.out.println("str1 = str2:" + (str1 == str2));
-
 //由于str4是一个变量和加号连接符的方式赋值，因此不会在常量池中进行检测，会在堆中分配一个内存，然后
 //将其放入，再返回引用；内存地址不相同；false
         String str3 = "hello world";
@@ -158,6 +157,108 @@ public class StringTest {
         String strEmpty = "";
         //指的String变量存放的是空值，没有指向任何对象；
         String strNull = null;
+    }
 
+//String在拼接过程或操作不当中会出现大量的中间对象，占内存而不易释放；
+//StringBuffer是为了解决此问题而提供的类，其实线程安全的，用synchronized修饰了所有方法；
+//StringBuilder也是为了解决此问题而提供的类，其线程不是安全的；
+    @Test
+    public void testNew()
+    {
+        //未指定大小的情况下，StringBuffer和StringBuilder数组的容量默认为16；
+        //在可预估大小的情况下，最好指定StringBuffer和StringBuilder数组大小，以防扩容；
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder(100);
+
+        //在使用String的过程中，会产生许多的中间变量；(但在此下版本的SVM中，比较智能，出来
+        // 的结果可能是拼接之后的结果，而不是各种的中间变量)；
+        String str1 = "hello";
+        str1 += ",";
+        str1 += "world";
+        str1 += ".";
+        System.out.println("str1: " + str1);
+
+        //在StringBuilder中它不产生中间变量，都在数组中存着，
+        // 只有在sb3.toString()才将数组中的值转化为字符串；
+        StringBuilder sb3 = new StringBuilder();
+        sb3.append("hello");
+        sb3.append(",");
+        sb3.append("world");
+        sb3.append('.');
+        System.out.println(sb3.length());
+        System.out.println("sb3: " + sb3.toString());
+
+        //由于将数组的长度设置成了10，因此虽然数组初始化了12位，但只能输出10位长度；
+        sb3.setLength(10);
+        System.out.println("sb3(10): " + sb3.toString());
+
+        //而在10位之后的数组并没有初始化，因此其输出的结果后面是乱码；
+        sb3.setLength(20);
+        System.out.println("sb3(20): " + sb3.toString());
+
+        StringBuffer sb4 = new StringBuffer();
+        sb4.append("hello");
+        sb4.append(",");
+        sb4.append("world");
+        sb4.append('.');
+        System.out.println(sb4.length());
+        System.out.println("sb4: " + sb4.toString());
+    }
+
+    @Test
+    public void testOpt1(){
+        String str1 = "hello" + ",world.";
+        System.out.println(str1);
+    }
+
+    @Test
+    public void testOpt2(){
+        String str1 = "hello,world.";
+        System.out.println(str1);
+    }
+    @Test
+    public void testOpt3(){
+        String str1 = "hello" + ",world.";
+        System.out.println(str1);
+
+        String str2 = str1 + "say hi.";
+        System.out.println(str2);
+
+        StringBuilder sb1 = new StringBuilder();
+        sb1.append(str1);
+        sb1.append("say hi.");
+        System.out.println(sb1.toString());
+    }
+
+    @Test
+    public void Opt3(){
+        long start = System.currentTimeMillis();
+        String str = "";
+        for (int n = 0;n < 5000; n++){
+            str += n;
+        }
+        System.out.println(str.length());
+        System.out.println(String.format("耗时：%d ms", System.currentTimeMillis() - start));
+
+        str = "";
+        start = System.currentTimeMillis();
+        for (int n = 0; n < 2000; n++){
+            StringBuilder sb = new StringBuilder();
+            sb.append(str);
+            sb.append(n);
+            str = sb.toString();
+        }
+        System.out.println(str.length());
+        System.out.println(String.format("耗时：%d ms", System.currentTimeMillis() - start));
+
+        str = "";
+        start = System.currentTimeMillis();
+        StringBuilder sb = new StringBuilder();
+        for (int n = 0; n < 20000; n++){
+            sb.append(n);
+        }
+        str = sb.toString();
+        System.out.println(str.length());
+        System.out.println(String.format("耗时：%d ms", System.currentTimeMillis() - start));
     }
 }
