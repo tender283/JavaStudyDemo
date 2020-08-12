@@ -55,5 +55,47 @@ public class ArrayTest {
         System.out.println("arr10 = " + Arrays.toString(arr10));
 
     }
+
+
+    @Test
+    public void testTraverse(){
+//示例：分别使⽤上述三种⽅式遍历数组 Integer[] arr = {1, 2, 3, 4, 5};
+  //数组遍历的方式一：for 循环使⽤数组下标；
+        Integer[] arr = {1, 2, 3, 4, 5};
+
+        for(int index = 0; index < arr.length; index++)
+        {
+            //第一种输出方式：
+            //System.out.println("下标：" + index + ", 存放的值是：" + arr[index]);
+            //第二种输出方式：
+            System.out.println(String.format("下标：%d, 存放的值是：%d", index, arr[index]));
+        }
+
+  //数组遍历的方式二：for each 循环；
+        int index = 0;
+        for(int val : arr){
+            //两种不同的输出方式；
+            //System.out.println("第" + index + "次取到" + val);
+            System.out.println(String.format("第%d次取到%d", index, val));
+            index++;
+        }
+  //数组遍历的方式三：Java 8 中新增的 Lambda 表达式；
+        Arrays.asList(arr).forEach(val -> System.out.println("值是：" + val));
+        System.out.println();
+        //上述展示的方式是属于单独语句的时候，类似于for的单独语句形式；
+        //而当语句不止一句时，其语句的表现形式为：
+        Arrays.asList(arr).forEach(val -> {
+            System.out.println(String.format("值是：%d", val));
+            if(val % 2 == 0){
+                System.out.println("    它是一个偶数");
+            }else{
+                System.out.println("    它是一个奇数");
+            }
+        });
+
+
+
+
+    }
     
 }
