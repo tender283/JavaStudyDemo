@@ -79,7 +79,7 @@ public class ArrayTest {
             System.out.println(String.format("第%d次取到%d", index, val));
             index++;
         }
-  //数组遍历的方式三：Java 8 中新增的 Lambda 表达式；
+        //数组遍历的方式三：Java 8 中新增的 Lambda 表达式；
         Arrays.asList(arr).forEach(val -> System.out.println("值是：" + val));
         System.out.println();
         //上述展示的方式是属于单独语句的时候，类似于for的单独语句形式；
@@ -92,10 +92,38 @@ public class ArrayTest {
                 System.out.println("    它是一个奇数");
             }
         });
-
-
-
-
     }
-    
+
+    @Test
+    public void testCopy() {
+        Integer[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8};
+        Integer[] arr2 = {6, 7, 8, 9, 10};
+//Java 中数组拷⻉常⽤的两种⽅式：
+//方式一：使⽤⼯具类 Arrays.copyOf 或 Arrays.copyOfRange（从根本上说：也是调用了System.arraycopy方法）；
+        //拷贝数组arr1的前3个元素，并生成一个新的数组；
+        Integer[] arr11 = new Integer[3];
+        arr11[0] = arr1[0];
+        arr11[1] = arr1[1];
+        arr11[2] = arr1[2];
+        System.out.println("arr11 = " + Arrays.toString(arr11));
+
+        Integer[] arr12 = Arrays.copyOf(arr1, 3 );
+        System.out.println("arr12 = " + Arrays.toString(arr12));
+
+        //拷贝数组 arr1 的后 3 位的元素到一个新的数组；
+        Integer arr13[] = Arrays.copyOfRange(arr1, arr1.length - 3, arr1.length);
+        System.out.println("arr13 = " + Arrays.toString(arr13));
+
+        //拷贝数组 arr1 的第 1 位到第 3 位的元素（不包括第 3 位）；
+        /*在下面的此次的操作中，里面的 Arrays.copyOfRange 工具类其实是调用了原方法：System.arraycopy,而在
+        此方法内会有循环判断，from 是从数组的 "0" 算起，而最后的判断是 "<" 判断；
+        */
+        Integer[] arr14 = Arrays.copyOfRange(arr1, 0, 2);
+        System.out.println("arr14 = " + Arrays.toString(arr14));
+
+//方式二：使⽤底层⽅法 System.arraycopy；
+        // 拷贝数组 arr2 的后 3 位到 arr1 到后 3 位；
+        System.arraycopy(arr2, arr2.length - 3, arr1, arr1.length - 3, 3);
+        System.out.println("arr1 = " + Arrays.toString(arr1));
+    }
 }
