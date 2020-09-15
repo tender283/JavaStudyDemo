@@ -57,6 +57,7 @@ public class ArrayTest {
     }
 
 
+//数组的遍历；
     @Test
     public void testTraverse(){
 //示例：分别使⽤上述三种⽅式遍历数组 Integer[] arr = {1, 2, 3, 4, 5};
@@ -94,6 +95,8 @@ public class ArrayTest {
         });
     }
 
+
+//数组的拷贝
     @Test
     public void testCopy() {
         Integer[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8};
@@ -126,4 +129,34 @@ public class ArrayTest {
         System.arraycopy(arr2, arr2.length - 3, arr1, arr1.length - 3, 3);
         System.out.println("arr1 = " + Arrays.toString(arr1));
     }
+
+
+
+//数组的填充
+    @Test
+    public void testFill(){
+//示例：定义⼀个⼤⼩为 10 的 int 数组，并将数组全部初始化为指定的值 5，打印数组；
+// 然后将数组后 3 为赋值为 3，再次打印数组。
+//方式一：使用普通的方式来实现数组的填充；
+        int[] arr = new int[10];
+        for(int index = 0;index < arr.length; index++){
+            arr[index] = 5;
+        }
+        System.out.println(Arrays.toString(arr));
+        for(int index = arr.length - 3; index < arr.length; index++){
+            arr[index] = 3;
+        }
+        System.out.println(Arrays.toString(arr));
+//方式二：使用Fill方法来实现数组的填充；
+        int[] arr1 = new int[10];
+        Arrays.fill(arr1,5);
+        System.out.println(Arrays.toString(arr1));
+        Arrays.fill(arr1,arr1.length - 3, arr1.length, 3);
+        System.out.println(Arrays.toString(arr1));
+//在fill方法中，Arrays.fill(arr1,fromIndex,toIndex,val)中，一定要注意fromIndex的范围 >= 0,
+//而toIndex <= arr1.length;    此外toIndex的值一定也大于fromIndex;   否则将会报错。
+    }
+
+
 }
+
