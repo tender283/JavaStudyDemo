@@ -176,6 +176,46 @@ public class ArrayTest {
         System.out.println(Arrays.toString(arr));
     }
 
+//数组的多维数组和不规则数组；
+    @Test
+    //在Java中其实只有一维数组，而多维数组可以被理解为“数组的数组”,
+    // 因此要在数组的第一维度中注明范围；
+    //多维数组的同⼀个维可以有不同的⻓度，因此也可以称为不规则数组;
+    //声明时使⽤多个 [] 标识来声明;
+    public void testDuoWeiShuZu(){
+        //示例：
+        //1、定义⼀个⼆维数组;
+        //2、第⼀维表示⽤户;
+        //3、第⼆维表示⽤户的具体信息（1. 编码, 2. 姓名, 3.性别, 4.年龄）;
+        //4、定义赋值并打印;
+        String[][] users = new String[5][];
+        users[0] = new String[4];
+        users[0][0] = "001";
+        users[0][1] = "张三";
+        users[0][2] = "男";
+        users[0][3] = "25";
+
+
+        //如下：当users[1] = new String[3];时，如果再输入users[0][3]的值就会因超出边界而报错；
+        //因此也从另一个方面看出，在Java中只有一维数组且存在不规则数组；
+        users[1] = new String[3];
+        users[1][0] = "002";
+        users[1][1] = "李四";
+        users[1][2] = "女";
+
+        //System.out.println(Arrays.toString(users));
+        //如果以上述方法进行输出之后，会发现只是一个地址性符号，因此可以证明在Java中只有一维数组；
+//输出的方式之一：for循环
+        for (int index = 0; index < users.length; index++){
+            System.out.println(Arrays.toString(users[index]));
+    }
+//输出的方式之二：for each循环
+        for (String[] user : users){
+            System.out.println(Arrays.toString(user));
+        }
+//输出的方式之三： Java 8 中新增的 Lambda 表达式；
+        Arrays.asList(users).forEach(user -> System.out.println(Arrays.toString(user)));
+    }
 
 }
 
