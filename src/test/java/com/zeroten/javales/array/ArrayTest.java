@@ -3,6 +3,7 @@ package com.zeroten.javales.array;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class ArrayTest {
     @Test
@@ -155,6 +156,24 @@ public class ArrayTest {
         System.out.println(Arrays.toString(arr1));
 //在fill方法中，Arrays.fill(arr1,fromIndex,toIndex,val)中，一定要注意fromIndex的范围 >= 0,
 //而toIndex <= arr1.length;    此外toIndex的值一定也大于fromIndex;   否则将会报错。
+    }
+
+
+//数组的排序;
+    @Test
+    public void testSort(){
+        //示例：
+        //1、定义⼀个⼤⼩为 100 的 int 数组;
+        //2、随机给每⼀位赋值⼀个 0 ~ 100 之间的数值;
+        //3、然后对该数组进⾏排序;
+        //4、并打印排序结果;
+        int[] arr = new int[100];
+        for(int index = 0; index < arr.length; index++){
+            arr[index] = new Random().nextInt(100);
+        }
+        System.out.println(Arrays.toString(arr));
+        Arrays.sort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 
 
